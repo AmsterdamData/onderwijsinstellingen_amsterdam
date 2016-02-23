@@ -34,20 +34,22 @@ s3 = boto.connect_s3(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
 # Start Code
 # ----------------------------------------------
 
-urlPage = "http://data.duo.nl/organisatie/open_onderwijsdata/gegevens_voor_gemeenten/Basisgegevens_instellingen/default.asp"
+urlPage = "/open_onderwijsdata/images/Basisgegevens_Instellingen.zip"
 
 # Get main page of Time values
-url = requests.get(urlPage)
+#url = requests.get(urlPage)
 #print url.text
 
 # Create iterable variable
-soup = BeautifulSoup(url.text)
+#soup = BeautifulSoup(url.text)
 
 # Select latest download link from page
-getDiv = soup.find('div', attrs={"class":"transacties"})
-print getDiv
-urlZip = getDiv.a.get('href')
-urlZip="http://data.duo.nl"+urlZip
+#getDiv = soup.find('a', attrs={"alt":"Basisgegevens instellingen"})
+#print getDiv
+#urlZip = getDiv.a.get('href')
+
+
+urlZip="https://www.duo.nl"+urlPage
 print urlZip
 
 result = requests.get(urlZip)
@@ -138,7 +140,7 @@ with open("onderwijsinstellingen_amsterdam.csv","w") as fout:
 				break	
 	# dump csv as string
 	output = fout.getvalue().strip('\r\n')		
-	
+
 # Instantiate a new client for Amazon Simple Storage Service (S3)
 bucket_name = "opendata.lytrix.com" 
 bucket = s3.get_bucket(bucket_name, validate=False)
